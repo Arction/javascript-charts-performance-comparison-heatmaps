@@ -1,0 +1,492 @@
+{
+    "Static": {
+        "50x50": {
+            "LightningChart": {
+                "initialRenderMs": 107
+            },
+            "Competitor A": {
+                "initialRenderMs": 146
+            },
+            "Competitor B": {
+                "initialRenderMs": 6
+            },
+            "Competitor C": {
+                "initialRenderMs": 108
+            }
+        },
+        "100x100": {
+            "LightningChart": {
+                "initialRenderMs": 107
+            },
+            "Competitor A": {
+                "initialRenderMs": 220
+            },
+            "Competitor B": {
+                "initialRenderMs": 190
+            },
+            "Competitor C": {
+                "initialRenderMs": 340
+            }
+        },
+        "200x200": {
+            "LightningChart": {
+                "initialRenderMs": 180
+            },
+            "Competitor A": {
+                "initialRenderMs": 405
+            },
+            "Competitor B": {
+                "initialRenderMs": 314
+            },
+            "Competitor C": {
+                "initialRenderMs": 1140
+            }
+        },
+        "500x500": {
+            "LightningChart": {
+                "initialRenderMs": 391
+            },
+            "Competitor A": {
+                "initialRenderMs": 1405
+            },
+            "Competitor B": {
+                "initialRenderMs": 980
+            },
+            "Competitor C": {
+                "initialRenderMs": 20360
+            }
+        },
+        "1000x1000": {
+            "LightningChart": {
+                "initialRenderMs": 802
+            },
+            "Competitor A": {
+                "initialRenderMs": 5400
+            },
+            "Competitor B": {
+                "initialRenderMs": 2900
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "2000x2000": {
+            "LightningChart": {
+                "initialRenderMs": 2950
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "initialRenderMs": 11500
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "3000x3000": {
+            "LightningChart": {
+                "initialRenderMs": 7180
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "4000x4000": {
+            "LightningChart": {
+                "initialRenderMs": 14950
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "5000x5000": {
+            "LightningChart": {
+                "initialRenderMs": 26800
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        }
+    },
+    "Refresh": {
+        "25x25": {
+            "LightningChart": {
+                "cpu": 20,
+                "fps": 164
+            },
+            "Competitor A": {
+                "cpu": 99,
+                "fps": 30
+            },
+            "Competitor B": {
+                "cpu": 99,
+                "fps": 31
+            },
+            "Competitor C": {
+                "cpu": 99,
+                "fps": 122
+            }
+        },
+        "50x50": {
+            "LightningChart": {
+                "cpu": 30,
+                "fps": 164
+            },
+            "Competitor A": {
+                "cpu": 99,
+                "fps": 20
+            },
+            "Competitor B": {
+                "cpu": 99,
+                "fps": 25
+            },
+            "Competitor C": {
+                "cpu": 99,
+                "fps": 44
+            }
+        },
+        "100x100": {
+            "LightningChart": {
+                "cpu": 44,
+                "fps": 163
+            },
+            "Competitor A": {
+                "cpu": 99,
+                "fps": 7
+            },
+            "Competitor B": {
+                "cpu": 99,
+                "fps": 13
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "200x200": {
+            "LightningChart": {
+                "cpu": 85,
+                "fps": 108
+            },
+            "Competitor A": {
+                "cpu": 99,
+                "fps": 2
+            },
+            "Competitor B": {
+                "cpu": 99,
+                "fps": 6
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "500x500": {
+            "LightningChart": {
+                "cpu": 99,
+                "fps": 35
+            },
+            "Competitor A": {
+                "cpu": 100,
+                "fps": 0.4
+            },
+            "Competitor B": {
+                "cpu": 100,
+                "fps": 1
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "750x750": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 18
+            },
+            "Competitor A": {
+                "cpu": 100,
+                "fps": 0.2
+            },
+            "Competitor B": {
+                "cpu": 100,
+                "fps": 0.5
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "1000x1000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 10
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "cpu": 100,
+                "fps": 0.2
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "2000x2000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 2
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "3000x3000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 0.7
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "4000x4000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 0.3
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "5000x5000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 0.2
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        }
+    },
+    "Append": {
+        "25x25": {
+            "LightningChart": {
+                "cpu": 17,
+                "fps": 159
+            },
+            "Competitor A": {
+                "cpu": 98,
+                "fps": 28
+            },
+            "Competitor B": {
+                "cpu": 97,
+                "fps": 27
+            },
+            "Competitor C": {
+                "cpu": 100,
+                "fps": 119
+            }
+        },
+        "50x50": {
+            "LightningChart": {
+                "cpu": 25,
+                "fps": 161
+            },
+            "Competitor A": {
+                "cpu": 98,
+                "fps": 19
+            },
+            "Competitor B": {
+                "cpu": 97,
+                "fps": 23
+            },
+            "Competitor C": {
+                "cpu": 100,
+                "fps": 43
+            }
+        },
+        "100x100": {
+            "LightningChart": {
+                "cpu": 20,
+                "fps": 163
+            },
+            "Competitor A": {
+                "cpu": 99,
+                "fps": 7
+            },
+            "Competitor B": {
+                "cpu": 98,
+                "fps": 14
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "200x200": {
+            "LightningChart": {
+                "cpu": 35,
+                "fps": 163
+            },
+            "Competitor A": {
+                "cpu": 100,
+                "fps": 2
+            },
+            "Competitor B": {
+                "cpu": 96,
+                "fps": 5
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "500x500": {
+            "LightningChart": {
+                "cpu": 98,
+                "fps": 138
+            },
+            "Competitor A": {
+                "cpu": 100,
+                "fps": 0.4
+            },
+            "Competitor B": {
+                "cpu": 100,
+                "fps": 1
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "750x750": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 57
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "cpu": 100,
+                "fps": 0.5
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "1000x1000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 35
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "2000x2000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 5
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "3000x3000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 2
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "4000x4000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 0.6
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "5000x5000": {
+            "LightningChart": {
+                "cpu": 100,
+                "fps": 0.3
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        }
+    }
+}

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Heatmap benchmarks visualization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0px 0px 0px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@arction/lcjs@3.0.0/dist/lcjs.iife.js"></script>
+    <script>
+      const {
+        lightningChart,
+        AxisTickStrategies,
+        SolidFill,
+        ColorHSV,
+        SolidLine,
+        emptyFill,
+        emptyLine,
+        AutoCursorModes,
+        UIOrigins,
+        LinearGradientFill,
+        HighlightModes,
+        UIElementBuilders,
+        ColorHEX,
+      } = lcjs;
+
+      const url = new URL(document.URL)
+      let src = url.searchParams.get('src') || 'pc'
+      let metrics = url.searchParams.get('metrics') || 'static'
+
+      const safeMin = (a, b) => a && b ? Math.min(a, b) : (a ? a : b)
+      const safeMax = (a, b) => a && b ? Math.max(a, b) : (a ? a : b)
+
+      const visualizeBenchmarkResults = (benchmarkData, conf) => {
+        const charts = Object.keys(conf)
+        charts.forEach((chart, iChart) => {
+          const chartConf = conf[chart]
+          console.log(benchmarkData);
+          const tests = Object.keys(benchmarkData)
+          console.log(tests)
+          const libraries = Object.keys(benchmarkData[tests[0]])
+          console.log(libraries)
+
+          const opts = {
+            ...chartConf,
+            categories: tests.map((test, iTest) => ({
+              name: test,
+            })),
+            groups: libraries.map((library, iLibrary) => ({
+              name: library,
+              format: (builder, series, x, y) => {
+                const library = series.getName()
+                const iTest = Math.round(x)
+                const test = tests[iTest]
+                const benchmark = benchmarkData[test][library]
+                const min = libraries.reduce((prev, lib) => safeMin(prev, benchmarkData[test][lib][chart]), Number.MAX_SAFE_INTEGER)
+                const max = libraries.reduce((prev, lib) => safeMax(prev, benchmarkData[test][lib][chart]), -Number.MAX_SAFE_INTEGER)
+
+                builder
+                  .addRow(library)
+                  .addRow(test)
+                if (benchmark.fail) {
+                  builder.addRow('Fail')
+                } else {
+                  chartConf.format(builder, benchmark[chart])
+                }
+                return builder
+              },
+              values: tests.map((test, iTest) => {
+                const benchmark = benchmarkData[test][library]
+                if (benchmark.fail) {
+                  return undefined
+                }
+                const min = libraries.reduce((prev, lib) => safeMin(prev, benchmarkData[test][lib][chart]), Number.MAX_SAFE_INTEGER)
+                const max = libraries.reduce((prev, lib) => safeMax(prev, benchmarkData[test][lib][chart]), -Number.MAX_SAFE_INTEGER)
+                return chartConf.value(benchmark[chart], min, max)
+              })
+            }))
+          }
+          console.log(opts)
+          comparisonLineChart(opts)
+        })
+      }
+
+      const comparisonLineChart = (props) => {
+        const categoriesCount = props.categories.length;
+        const groupsCount = props.groups.length;
+
+        const chart = lightningChart()
+          .ChartXY({
+            disableAnimations: true
+          })
+          .setPadding({
+            right: 150
+          })
+          .setAutoCursor((cursor) => cursor
+            .disposeTickMarkerX()
+            .disposeTickMarkerY()
+          )
+        const xAxis = chart
+          .getDefaultAxisX()
+          .setTickStrategy(AxisTickStrategies.Empty)
+        const yAxis = chart.getDefaultAxisY()
+          .setTickStrategy(AxisTickStrategies.Empty)
+
+        if (props.title) {
+          chart.setTitle(props.title);
+        } else {
+          chart.setTitle('').setTitleFillStyle(emptyFill);
+        }
+        if (props.titleAxisX) xAxis.setTitle(props.titleAxisX);
+        if (props.titleAxisY) yAxis.setTitle(props.titleAxisY);
+
+        // Each category has own series (same color and y Axis)
+        console.log(props.categories, props.groups)
+        const groupSeries = props.groups.map((group, iGroup) => {
+          const series = chart.addLineSeries()
+            .setName(group.name)
+            .setCursorResultTableFormatter(group.format)
+            .setStrokeStyle(new SolidLine({
+              thickness: 5,
+              fillStyle: new SolidFill({
+              color: ColorHSV((360 * iGroup) / groupsCount),
+              })
+            }))
+            .add(group.values.map((y, i) => ({x: i, 
+              y
+            }))
+              .filter(p => p.y !== undefined)
+            )
+          return series
+        })
+
+        props.categories.forEach((category, iCategory) => {
+          xAxis.addCustomTick(UIElementBuilders.AxisTick)
+            .setValue(iCategory)
+            .setTextFormatter(() => category.name)
+            .setGridStrokeStyle((style) => style.setFillStyle(fill => fill.setA(50)))
+        })
+
+        xAxis.fit()
+        yAxis.fit()
+        const margin = 0.10
+        requestAnimationFrame(() => {
+          xAxis.setInterval(-.5, categoriesCount -.5, false, true)
+          const min = Math.min(yAxis.getInterval().start, yAxis.getInterval().end)
+          const max = Math.max(yAxis.getInterval().start, yAxis.getInterval().end)
+          const interval = max -min
+          if (! props.invertY) {
+            yAxis.setInterval(
+              min - margin * interval,
+              max + margin * interval,
+              false,
+              true
+            )
+          } else {
+            yAxis.setInterval(
+              max + margin * interval,
+              min - margin * interval,
+              false,
+              true
+            )
+          }
+          
+          if (props.markerLowY)
+            yAxis.addCustomTick(UIElementBuilders.AxisTick)
+              .setValue(props.invertY ? max: min)
+              .setTextFormatter(() => props.markerLowY)
+              .setGridStrokeStyle((style) => style.setFillStyle(fill => fill.setA(50)))
+
+          if (props.markerHighY)
+            yAxis.addCustomTick(UIElementBuilders.AxisTick)
+              .setValue(props.invertY ? min: max)
+              .setTextFormatter(() => props.markerHighY)
+              .setGridStrokeStyle((style) => style.setFillStyle(fill => fill.setA(50)))
+
+          if (props.markers) {
+            props.markers.forEach((marker) => {
+              const tick = yAxis.addCustomTick(UIElementBuilders.AxisTick)
+                .setValue(marker[0])
+                .setTextFormatter(() => marker[1])
+                .setGridStrokeStyle((style) => style.setFillStyle(fill => fill.setA(50)))
+
+              if (marker.length === 3 && marker[2]) {
+                tick.setGridStrokeStyle(new SolidLine({
+                  thickness: 2,
+                  fillStyle: new SolidFill({color: ColorHEX(marker[2])})
+                }))
+              }
+            })
+          }
+        })
+
+        const legend = chart.addLegendBox().add(chart);
+      };
+
+      const dataSrc = `benchmarks_${src}.json`
+      console.log('data source:',dataSrc)
+      fetch(dataSrc)
+        .then((r) => r.json())
+        .then((benchmarks) => {
+
+          if (metrics === 'static') {
+
+            delete benchmarks.Static['50x50']
+
+            visualizeBenchmarkResults(
+              benchmarks.Static,
+              {
+                initialRenderMs: {
+                  title: `Heatmap Chart Comparison | Load-up speed`,
+                  titleAxisY: 'Load-up speed',
+                  titleAxisX: 'Heatmap Dimensions',
+                  markers: [
+                    [100, "100 milliseconds"],
+                    [1000, "1 second"],
+                    [2000, "2 seconds"],
+                    [5000, "5 seconds"],
+                    [10000, "10 seconds"],
+                    [15000, "15 seconds"],
+                    [20000, "20 seconds"],
+                    [25000, "25 seconds"]
+                  ],
+                  invertY: true,
+                  value: (value, min, max) => value,
+                  format: (builder, value) => builder.addRow('Load-up speed', value.toFixed(1), 'ms')
+                }
+              }
+            );
+          } else if (metrics === 'refresh' || metrics === 'append') {
+            visualizeBenchmarkResults(
+              metrics === 'refresh' ? 
+                benchmarks.Refresh :
+                benchmarks.Append  
+              ,
+              {
+                fps: {
+                  title: `Heatmap Chart Comparison | ${metrics} | Frames Per Second`,
+                  titleAxisX: 'Heatmap Dimensions',
+                  value: (value, min, max) => Math.min(value, 60),
+                  format: (builder, fps) => builder.addRow('FPS', fps.toFixed(1)),
+                  titleAxisY: 'Frames Per Second (refresh rate)',
+                  markers: [
+                    [0, "0"],
+                    [20, "20", "#ff0000b0"],
+                    [40, "40"],
+                    [60, "> 60"],
+                  ]
+                },
+                cpu: {
+                  title: `Heatmap Chart Comparison | ${metrics} | CPU Usage`,
+                  titleAxisX: 'Heatmap Dimensions',
+                  invertY: true,
+                  value: (value, min, max) => value,
+                  format: (builder, cpu) => builder.addRow('CPU Usage', cpu.toFixed(1), '%'),
+                  titleAxisY: 'CPU usage (%)',
+                  markers: [
+                    [100, "100"],
+                    [75, "75"],
+                    [50, "50"],
+                    [25, "25"],
+                    [0, "0"],
+                  ]
+                }
+              }
+            )
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Heatmap benchmarks visualization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0px 0px 0px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@arction/lcjs@3.0.0/dist/lcjs.iife.js"></script>
+    <script>
+      const url = new URL(document.URL)
+      let src = url.searchParams.get('src') || 'pc'
+      let metrics = url.searchParams.get('metrics') || 'refresh'
+      
+      const dataSrc = `benchmarks_${src}.json`
+      console.log('data source:',dataSrc)
+      fetch(dataSrc)
+        .then((r) => r.json())
+        .then((benchmarks) => {
+          visualizeBenchmarks(
+            metrics === 'refresh' ? benchmarks.Refresh : benchmarks.Append
+          )
+        });
+
+      const visualizeBenchmarks = (benchmarks) => {
+        console.log(benchmarks)
+        // => Map into XY data where X = Library and Y = max data points count with FPS > 10.
+        const tests = Object.keys(benchmarks)
+        console.log(tests)
+        const libraries = Object.keys(benchmarks[tests[0]])
+        console.log(libraries)
+        const libraryMaxDataPointCounts = libraries.map(library => {
+          const heaviestPassingTest = tests.reduce((prev, cur) => {
+            const fps = benchmarks[cur][library].fps
+            if (fps >= 10) {
+              return cur
+            }
+            return prev
+          }, undefined)
+
+          // Parse data points count from name of test (e.g. "50x50" = 2500).
+          const maxDataPointsCount = Number(heaviestPassingTest.split('x')[0]) * heaviestPassingTest.split('x')[1]
+          return maxDataPointsCount
+        })
+        console.log(libraryMaxDataPointCounts)
+
+        barChart({
+          title: `JavaScript Chart heatmap data amounts with FPS > 10 | ${metrics}`,
+          titleY: `Max heatmap data amount (data points)`,
+          titleX: 'JavaScript Chart',
+          categories: libraries,
+          values: libraryMaxDataPointCounts,
+          markersY: [
+            [100 * 100, '100x100'],
+            [200 * 200, '200x200'],
+            [500 * 500, '500x500'],
+            [750 * 750, '750x750'],
+            [1000 * 1000, '1000x1000'],
+            [2000 * 2000, '2000x2000'],
+          ],
+          logarithmic: false,
+        })
+      }
+
+      const barChart = (props) => {
+        const {
+          lightningChart,
+          AxisTickStrategies,
+          SolidFill,
+          ColorHSV,
+          SolidLine,
+          emptyFill,
+          emptyLine,
+          AutoCursorModes,
+          UIOrigins,
+          LinearGradientFill,
+          HighlightModes,
+          UIElementBuilders,
+          FormattingFunctions,
+          ColorHEX,
+        } = lcjs;
+        const { title, titleX, titleY, categories, values, markersY, logarithmic } = props
+        const chart = lightningChart().ChartXY({
+          disableAnimations: true,
+          defaultAxisY: logarithmic ? {
+            type: 'logarithmic',
+            base: 10,
+          } : undefined
+        })
+        chart
+          .setAutoCursorMode(undefined)
+          .setPadding({
+            right: 150
+          })
+        if (title) {
+          chart.setTitle(title) 
+        } else {
+          chart.setTitleFillStyle(emptyFill)
+        }
+        const axisX = chart.getDefaultAxisX()
+          .setTickStrategy(AxisTickStrategies.Empty)
+        const axisY = chart.getDefaultAxisY()
+          .setTickStrategy(AxisTickStrategies.Numeric, (ticks) => ticks
+            .setFormattingFunction(FormattingFunctions.NumericUnits)
+          )
+        if (titleX) {
+          axisX.setTitle(titleX)
+        }
+        if (titleY) {
+          axisY.setTitle(titleY)
+        }
+
+        if (markersY) {
+          markersY.forEach((marker) => {
+            axisY.addCustomTick(UIElementBuilders.AxisTick)
+              .setValue(marker[0])
+              .setTextFormatter(() => marker[1])
+              .setGridStrokeStyle(style => style.setFillStyle(fill => fill.setA(50)))
+              .setTickLength(50)
+              .setMarker(marker => marker
+                .setTickStyle(emptyLine)
+              )
+          })
+        }
+
+        const categorySeries = categories.map((category, iCategory) => {
+          const categoryColor = ColorHSV((360 * iCategory) / categories.length)
+          const series = chart.addRectangleSeries()
+            .setName(category)
+            .setDefaultStyle(figure => figure
+              .setFillStyle(new LinearGradientFill({
+                stops: [
+                  {offset: 0, color: categoryColor.setA(60)},
+                  {offset: 1, color: categoryColor}
+                ]
+              }))
+            )
+          return series
+        })
+
+        let x = 0.5
+        categories.forEach((category, iCategory) => {
+          const xBarStart = x
+          const xLabel = x + 0.5
+          const xBarEnd = x + 1.0
+          x = xBarEnd + 0.5
+          const figure = categorySeries[iCategory].add({
+            x1: xBarStart,
+            x2: xBarEnd,
+            y1: 1,
+            y2: values[iCategory]
+          })
+
+          axisX.addCustomTick(UIElementBuilders.AxisTick)
+            .setValue(xLabel)
+            .setTextFormatter(() => category)
+            .setGridStrokeStyle(emptyLine)
+        })
+
+        axisX.setInterval(0, x, false, true)
+        axisY.setInterval(1, 1.10 * values.reduce((prev, cur) => Math.max(prev, cur), 0), false, true)
+        
+        const legend = chart.addLegendBox().add(chart)
+      }
+
+    </script>
+  </body>
+</html>

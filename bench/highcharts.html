@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Highcharts benchmark app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+    <style>
+      #wait,
+      #reference {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="wait">Loading lib....</h2>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/boost-canvas.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script src="config.iife.js"></script>
+    <script>
+      // Same code for all chart libraries.
+      console.log(BENCHMARK_CONFIG);
+      const wait = document.getElementById("wait");
+
+      (async () => {
+        wait.textContent = "Generating test data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const data0 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+        const data1 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+
+        wait.textContent = "Waiting for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        console.log(window.Test);
+
+        wait.textContent = "Parsing data for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const formattedData0 = window.Test.formatData(data0);
+        const formattedData1 = window.Test.formatData(data1);
+
+        wait.textContent = "Rendering initial data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        let tStart = Date.now();
+        window.Test.renderInitial(formattedData0);
+        wait.textContent = "";
+
+        if (BENCHMARK_CONFIG.refreshData) {
+          // Keep refreshing heat map data every frame.
+          let iDataset = 0;
+          const refresh = () => {
+            iDataset = (iDataset + 1) % 2;
+            window.Test.setData(
+              iDataset === 0 ? formattedData0 : formattedData1
+            );
+            requestAnimationFrame(refresh);
+          };
+          requestAnimationFrame(refresh);
+        }
+
+        if (BENCHMARK_CONFIG.scrollData) {
+          // Push +1 heat map column every frame.
+          let iColumn = 0
+          const append = () => {
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2)
+            const column = iColumn < BENCHMARK_CONFIG.columns ?
+              data0[iColumn] :
+              data1[iColumn - BENCHMARK_CONFIG.columns]
+            window.Test.appendColumn(column)
+            if (typeof BENCHMARK_CONFIG.scrollData === 'boolean') {
+              requestAnimationFrame(append)
+            } else {
+              setTimeout(append, BENCHMARK_CONFIG.scrollData)
+            }
+          }
+          requestAnimationFrame(append)
+        }
+
+        requestAnimationFrame(() => {
+          const tAfter = Date.now();
+          console.log(`initial render`, (tAfter - tStart).toFixed(1), "ms");
+
+          setTimeout(() => {
+            tStart = Date.now();
+            let frames = 0;
+            let fps;
+            const recordFrame = () => {
+              frames++;
+              const tNow = Date.now();
+              fps = 1000 / ((tNow - tStart) / frames);
+              requestAnimationFrame(recordFrame);
+            };
+            requestAnimationFrame(recordFrame);
+            setInterval(() => console.log(`FPS: ${fps.toFixed(1)}`), 1000);
+          }, 2000);
+        });
+      })();
+    </script>
+    <div id="chart"></div>
+
+    <script>
+      // Benchmark code for particular library.
+      window.Test = (() => {
+        let chart;
+
+        let curDataUnformatted
+
+        const formatData = (data) => {
+          curDataUnformatted = data
+          // data = number[][], map to [number,number,number][]
+          const highchartsHeatmapData = [];
+          for (let column = 0; column < BENCHMARK_CONFIG.columns; column += 1) {
+            for (let row = 0; row < BENCHMARK_CONFIG.rows; row += 1) {
+              highchartsHeatmapData.push([column, row, data[column][row]]);
+            }
+          }
+          return highchartsHeatmapData;
+        };
+
+        const renderInitial = (data) => {
+          chart = Highcharts.chart("chart", {
+            chart: {
+              type: "heatmap",
+            },
+
+            boost: {
+              useGPUTranslations: true,
+            },
+
+            series: [
+              {
+                data,
+                boostThreshold: 100,
+                turboThreshold: Number.MAX_VALUE, // #3404, remove after 4.0.5 release
+                borderWidth: 0,
+                nullColor: "#EFEFEF",
+                boostThreshold: 1,
+              },
+            ],
+
+            colorAxis: {
+              stops: [
+                [0, "#3060cf"],
+                [0.5, "#fffbbc"],
+                [0.9, "#c4463a"],
+                [1, "#c4463a"],
+              ],
+              min: 0,
+              max: 1,
+              startOnTick: false,
+              endOnTick: false,
+              labels: {
+                format: "{value}",
+              },
+            },
+          });
+        };
+
+        const setData = (data) => {
+          chart.series[0].setData(data);
+        };
+
+        const appendColumn = (column) => {
+          curDataUnformatted.shift()
+          curDataUnformatted.push(column)
+          const dataFormatted = formatData(curDataUnformatted)
+          setData(dataFormatted)
+        }
+
+        return {
+          formatData,
+          renderInitial,
+          setData,
+          appendColumn,
+        };
+      })();
+    </script>
+
+    <p id="reference">
+      Code based on
+      <a href="https://www.highcharts.com/demo/heatmap-canvas"
+        >https://www.highcharts.com/demo/heatmap-canvas</a
+      >
+    </p>
+  </body>
+</html>

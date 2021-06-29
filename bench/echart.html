@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EChart benchmark app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+    <style>
+      #wait,
+      #reference {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="wait">Loading lib....</h2>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+    <script src="config.iife.js"></script>
+    <script>
+      // Same code for all chart libraries.
+      console.log(BENCHMARK_CONFIG);
+      const wait = document.getElementById("wait");
+
+      (async () => {
+        wait.textContent = "Generating test data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const data0 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+        const data1 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+
+        wait.textContent = "Waiting for chart ...";
+        while (! window.Test) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        console.log(window.Test);
+
+        wait.textContent = "Parsing data for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const formattedData0 = window.Test.formatData(data0);
+        const formattedData1 = window.Test.formatData(data1);
+
+        wait.textContent = "Rendering initial data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        let tStart = Date.now();
+        window.Test.renderInitial(formattedData0);
+        wait.textContent = "";
+
+        if (BENCHMARK_CONFIG.refreshData) {
+          // Keep refreshing heat map data every frame.
+          let iDataset = 0;
+          const refresh = () => {
+            iDataset = (iDataset + 1) % 2;
+            window.Test.setData(
+              iDataset === 0 ? formattedData0 : formattedData1
+            );
+            requestAnimationFrame(refresh);
+          };
+          requestAnimationFrame(refresh);
+        }
+
+        if (BENCHMARK_CONFIG.scrollData) {
+          // Push +1 heat map column every frame.
+          let iColumn = 0
+          const append = () => {
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2)
+            const column = iColumn < BENCHMARK_CONFIG.columns ?
+              data0[iColumn] :
+              data1[iColumn - BENCHMARK_CONFIG.columns]
+            window.Test.appendColumn(column)
+            
+            if (typeof BENCHMARK_CONFIG.scrollData === 'boolean') {
+              requestAnimationFrame(append)
+            } else {
+              setTimeout(append, BENCHMARK_CONFIG.scrollData)
+            }
+          }
+          requestAnimationFrame(append)
+        }
+
+        requestAnimationFrame(() => {
+          const tAfter = Date.now();
+          console.log(`initial render`, (tAfter - tStart).toFixed(1), "ms");
+
+          setTimeout(() => {
+            tStart = Date.now();
+            let frames = 0;
+            let fps;
+            const recordFrame = () => {
+              frames++;
+              const tNow = Date.now();
+              fps = 1000 / ((tNow - tStart) / frames);
+              requestAnimationFrame(recordFrame);
+            };
+            requestAnimationFrame(recordFrame);
+            setInterval(() => console.log(`FPS: ${fps.toFixed(1)}`), 1000);
+          }, 2000);
+        });
+      })();
+    </script>
+    <div id="chart"></div>
+
+    <script>
+      // Benchmark code for particular library.
+      window.Test = (() => {
+        let chart;
+
+        let curDataUnformatted;
+
+        const formatData = (data) => {
+          curDataUnformatted = data
+          // data = number[][], map to [number, number, number][]
+          const eHeatmapData = []
+          for (let iRow = 0; iRow < BENCHMARK_CONFIG.rows; iRow += 1) {
+            for (let iColumn = 0; iColumn < BENCHMARK_CONFIG.columns; iColumn += 1) {
+              eHeatmapData.push([
+                iColumn,
+                iRow,
+                data[iColumn][iRow]
+              ])
+            }
+          }
+          return eHeatmapData
+        };
+
+        const renderInitial = (data) => {
+          const option = {
+            tooltip: {},
+            xAxis: {
+              type: 'category',
+              data: new Array(BENCHMARK_CONFIG.columns).fill(0).map((_, i) => i)
+            },
+            yAxis: {
+              type: 'category',
+              data: new Array(BENCHMARK_CONFIG.rows).fill(0).map((_, i) => i)
+            },
+            visualMap: {
+              min: 0,
+              max: 1,
+              calculable: true,
+              realtime: false,
+              inRange: {
+                  color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+              }
+            },
+            series: [{
+              name: 'Gaussian',
+              type: 'heatmap',
+              data: data,
+              emphasis: {
+                  itemStyle: {
+                      borderColor: '#333',
+                      borderWidth: 1
+                  }
+              },
+              progressive: 1000,
+              animation: false
+            }]
+          };
+
+          chart = echarts.init(document.getElementById('chart'));
+          chart.setOption(option);
+
+        };
+
+        const setData = (data) => {
+          chart.setOption({
+            series: [{
+              data
+            }],
+          })
+        };
+
+        const appendColumn = (column) => {
+          curDataUnformatted.shift()
+          curDataUnformatted.push(column)
+          const dataFormatted = formatData(curDataUnformatted)
+          setData(dataFormatted)
+        }
+
+        return {
+          formatData,
+          renderInitial,
+          setData,
+          appendColumn,
+        };
+      })();
+    </script>
+
+    <p id="reference">
+      Code based on
+      <a href="https://echarts.apache.org/examples/en/editor.html?c=heatmap-large"
+        >https://echarts.apache.org/examples/en/editor.html?c=heatmap-large</a
+      >
+    </p>
+  </body>
+</html>
