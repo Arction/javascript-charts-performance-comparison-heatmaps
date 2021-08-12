@@ -109,7 +109,7 @@ The available heat map dimensions range is crucial in real-life applications, be
 
 ![](heatmap-high-res.png "High resolution heat map rendered")
 
-With _refreshing_ and _appending_ heat map applications it is clear that no other library than _Lightning Chart JS_ is able to function well when heat map size exceeds even as little as 50x50;
+With _refreshing_ and _appending_ heat map applications **it is clear that no other library than _Lightning Chart JS_ is able to function well when heat map size exceeds even as little as 50x50;**
 
 Other libraries FPS quickly plummets to 5-15 range and even with 25x25 heat map (125 total data samples) they use 100% of available CPU power.
 
