@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>LightningChart JS benchmark app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+    <style>
+      #wait,
+      #reference {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="wait">Loading lib....</h2>
+
+    <!-- LCJS v.3.1.0 -->
+    <script src="https://unpkg.com/@arction/lcjs@3.1.0/dist/lcjs.iife.js"></script>
+
+    <script src="config.iife.js"></script>
+    <script>
+      // Same code for all chart libraries.
+      console.log(BENCHMARK_CONFIG);
+      const wait = document.getElementById("wait");
+
+      (async () => {
+        wait.textContent = "Generating test data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const data0 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+        const data1 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+
+        wait.textContent = "Waiting for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        console.log(window.Test);
+
+        wait.textContent = "Parsing data for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const formattedData0 = window.Test.formatData(data0);
+        const formattedData1 = window.Test.formatData(data1);
+
+        wait.textContent = "Rendering initial data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        let tStart = Date.now();
+        window.Test.renderInitial(formattedData0);
+        wait.textContent = "";
+
+        if (BENCHMARK_CONFIG.refreshData) {
+          // Keep refreshing heat map data every frame.
+          let iDataset = 0;
+          const refresh = () => {
+            iDataset = (iDataset + 1) % 2;
+            window.Test.setData(
+              iDataset === 0 ? formattedData0 : formattedData1
+            );
+            requestAnimationFrame(refresh);
+          };
+          requestAnimationFrame(refresh);
+        }
+
+        if (BENCHMARK_CONFIG.scrollData) {
+          // Push +1 heat map column every frame.
+          let iColumn = 0;
+          const append = () => {
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2);
+            const column =
+              iColumn < BENCHMARK_CONFIG.columns
+                ? data0[iColumn]
+                : data1[iColumn - BENCHMARK_CONFIG.columns];
+            window.Test.appendColumn(column);
+            if (typeof BENCHMARK_CONFIG.scrollData === "boolean") {
+              requestAnimationFrame(append);
+            } else {
+              setTimeout(append, BENCHMARK_CONFIG.scrollData);
+            }
+          };
+          requestAnimationFrame(append);
+        }
+
+        requestAnimationFrame(() => {
+          const tAfter = Date.now();
+          console.log(`initial render`, (tAfter - tStart).toFixed(1), "ms");
+
+          setTimeout(() => {
+            tStart = Date.now();
+            let frames = 0;
+            let fps;
+            const recordFrame = () => {
+              frames++;
+              const tNow = Date.now();
+              fps = 1000 / ((tNow - tStart) / frames);
+              requestAnimationFrame(recordFrame);
+            };
+            requestAnimationFrame(recordFrame);
+            setInterval(() => console.log(`FPS: ${fps.toFixed(1)}`), 1000);
+          }, 2000);
+        });
+      })();
+    </script>
+    <div id="chart"></div>
+
+    <script>
+      // Benchmark code for particular library.
+      const {
+        lightningChart,
+        PalettedFill,
+        LUT,
+        ColorHEX,
+        AxisScrollStrategies,
+      } = lcjs;
+
+      window.Test = (() => {
+        let chart;
+        let heatmap;
+
+        const formatData = (data) => {
+          // data = number[][]
+          return data;
+        };
+
+        const renderInitial = (data) => {
+          chart = lightningChart().ChartXY({
+            container: "chart",
+            disableAnimations: true,
+          });
+
+          chart
+            .getDefaultAxisX()
+            .setScrollStrategy(AxisScrollStrategies.progressive)
+            .setInterval(-BENCHMARK_CONFIG.columns, 0);
+
+          heatmap = chart
+            // Note: Using scrolling series type for static performance test as well for simplicity.
+            // This might result in slightly worse performance than when using static grid series.
+            .addHeatmapScrollingGridSeries({
+              scrollDimension: "columns",
+              resolution: BENCHMARK_CONFIG.rows,
+              start: { x: 0, y: 0 },
+            })
+            .setName("Heatmap")
+            .setPixelInterpolationMode("bilinear")
+            .setFillStyle(
+              new PalettedFill({
+                lut: new LUT({
+                  interpolate: true,
+                  steps: [
+                    { value: 0, color: ColorHEX("#3060cf") },
+                    { value: 0.5, color: ColorHEX("#fffbbc") },
+                    { value: 0.9, color: ColorHEX("#c4463a") },
+                    { value: 1, color: ColorHEX("#c4463a") },
+                  ],
+                }),
+              })
+            )
+            .addIntensityValues(data);
+
+          const legend = chart.addLegendBox().add(chart);
+        };
+
+        const setData = (data) => {
+          heatmap.clear().addIntensityValues(data);
+        };
+
+        const appendColumn = (column) => {
+          heatmap.addIntensityValues([column]);
+        };
+
+        return {
+          formatData,
+          renderInitial,
+          setData,
+          appendColumn,
+        };
+      })();
+    </script>
+
+    <p id="reference"></p>
+  </body>
+</html>

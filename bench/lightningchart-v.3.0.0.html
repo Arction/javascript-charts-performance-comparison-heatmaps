@@ -16,6 +16,7 @@
   <body>
     <h2 id="wait">Loading lib....</h2>
 
+    <!-- LCJS v.3.0.0 -->
     <script src="https://unpkg.com/@arction/lcjs@3.0.0/dist/lcjs.iife.js"></script>
 
     <script src="config.iife.js"></script>
@@ -69,20 +70,21 @@
 
         if (BENCHMARK_CONFIG.scrollData) {
           // Push +1 heat map column every frame.
-          let iColumn = 0
+          let iColumn = 0;
           const append = () => {
-            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2)
-            const column = iColumn < BENCHMARK_CONFIG.columns ?
-              data0[iColumn] :
-              data1[iColumn - BENCHMARK_CONFIG.columns]
-            window.Test.appendColumn(column)
-            if (typeof BENCHMARK_CONFIG.scrollData === 'boolean') {
-              requestAnimationFrame(append)
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2);
+            const column =
+              iColumn < BENCHMARK_CONFIG.columns
+                ? data0[iColumn]
+                : data1[iColumn - BENCHMARK_CONFIG.columns];
+            window.Test.appendColumn(column);
+            if (typeof BENCHMARK_CONFIG.scrollData === "boolean") {
+              requestAnimationFrame(append);
             } else {
-              setTimeout(append, BENCHMARK_CONFIG.scrollData)
+              setTimeout(append, BENCHMARK_CONFIG.scrollData);
             }
-          }
-          requestAnimationFrame(append)
+          };
+          requestAnimationFrame(append);
         }
 
         requestAnimationFrame(() => {
@@ -109,16 +111,11 @@
 
     <script>
       // Benchmark code for particular library.
-      const {
-        lightningChart,
-        PalettedFill,
-        LUT,
-        ColorHEX,
-      } = lcjs;
+      const { lightningChart, PalettedFill, LUT, ColorHEX } = lcjs;
 
       window.Test = (() => {
-        let chart
-        let heatmap
+        let chart;
+        let heatmap;
 
         const formatData = (data) => {
           // data = number[][]
@@ -127,38 +124,41 @@
 
         const renderInitial = (data) => {
           chart = lightningChart().ChartXY({
-            container: 'chart',
+            container: "chart",
             disableAnimations: true,
-          })
+          });
 
-          heatmap = chart.addHeatmapSeries({
-            columns: BENCHMARK_CONFIG.columns,
-            rows: BENCHMARK_CONFIG.rows,
-            start: { x: 0, y: 0 },
-            end: { x: BENCHMARK_CONFIG.columns, y: BENCHMARK_CONFIG.rows },
-            pixelate: true,
-          })
-            .setFillStyle(new PalettedFill({
-              lut: new LUT({
-                interpolate: true,
-                steps: [
-                  {value: 0, color: ColorHEX("#3060cf")},
-                  {value: 0.5,color: ColorHEX( "#fffbbc")},
-                  {value: 0.9,color: ColorHEX( "#c4463a")},
-                  {value: 1, color: ColorHEX("#c4463a")},
-                ]
+          heatmap = chart
+            .addHeatmapSeries({
+              columns: BENCHMARK_CONFIG.columns,
+              rows: BENCHMARK_CONFIG.rows,
+              start: { x: 0, y: 0 },
+              end: { x: BENCHMARK_CONFIG.columns, y: BENCHMARK_CONFIG.rows },
+              pixelate: true,
+            })
+            .setFillStyle(
+              new PalettedFill({
+                lut: new LUT({
+                  interpolate: true,
+                  steps: [
+                    { value: 0, color: ColorHEX("#3060cf") },
+                    { value: 0.5, color: ColorHEX("#fffbbc") },
+                    { value: 0.9, color: ColorHEX("#c4463a") },
+                    { value: 1, color: ColorHEX("#c4463a") },
+                  ],
+                }),
               })
-            }))
-          .addColumn(data.length, 'value', data)
+            )
+            .addColumn(data.length, "value", data);
         };
 
         const setData = (data) => {
-          heatmap.addColumn(data.length, 'value', data)
+          heatmap.addColumn(data.length, "value", data);
         };
 
         const appendColumn = (column) => {
-          heatmap.addColumn(1, 'value', [column])
-        }
+          heatmap.addColumn(1, "value", [column]);
+        };
 
         return {
           formatData,
@@ -169,7 +169,6 @@
       })();
     </script>
 
-    <p id="reference">
-    </p>
+    <p id="reference"></p>
   </body>
 </html>
