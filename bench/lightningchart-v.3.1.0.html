@@ -139,14 +139,17 @@
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setInterval(-BENCHMARK_CONFIG.columns, 0);
 
-          heatmap = chart
-            // Note: Using scrolling series type for static performance test as well for simplicity.
-            // This might result in slightly worse performance than when using static grid series.
-            .addHeatmapScrollingGridSeries({
-              scrollDimension: "columns",
-              resolution: BENCHMARK_CONFIG.rows,
-              start: { x: 0, y: 0 },
-            })
+          heatmap = BENCHMARK_CONFIG.scrollData
+            ? chart.addHeatmapScrollingGridSeries({
+                scrollDimension: "columns",
+                resolution: BENCHMARK_CONFIG.rows,
+              })
+            : chart.addHeatmapGridSeries({
+                dataOrder: "columns",
+                columns: BENCHMARK_CONFIG.columns,
+                rows: BENCHMARK_CONFIG.rows,
+              });
+          heatmap
             .setName("Heatmap")
             .setPixelInterpolationMode("bilinear")
             .setFillStyle(
@@ -161,14 +164,18 @@
                   ],
                 }),
               })
-            )
-            .addIntensityValues(data);
+            );
+
+          if (BENCHMARK_CONFIG.scrollData) heatmap.addIntensityValues(data);
+          else heatmap.invalidateIntensityValues(data);
 
           const legend = chart.addLegendBox().add(chart);
         };
 
         const setData = (data) => {
-          heatmap.clear().addIntensityValues(data);
+          if (BENCHMARK_CONFIG.scrollData)
+            heatmap.clear().addIntensityValues(data);
+          else heatmap.invalidateIntensityValues(data);
         };
 
         const appendColumn = (column) => {
