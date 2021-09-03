@@ -1,5 +1,7 @@
 Public comparison of [LightningChart® JS](https://www.arction.com/lightningchart-js/) performance against other JavaScript charting libraries in visualizing different Heat map charts.
 
+**UPDATE 3.9.2021**: Updated performance comparison with _LightningChart JS_ version 3.1 completely overthrows the previous results.
+
 Heat maps are used for visualization of 3 dimensional data by mapping two dimensions to X and Y location and coloring the location based on the 3rd data dimension.
 
 There are several different sub groups within heat maps in data visualization, this comparison focuses to _2D grid heat maps_.
