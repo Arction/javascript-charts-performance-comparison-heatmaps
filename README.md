@@ -131,6 +131,9 @@ From the results, we can see that _LightningChart JS_ is able to take performanc
 
 The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is **13800x** more efficient than the average chart without hardware acceleration, and **835x** more efficient than the closest hardware accelerated competitor.
 
+To see these _next generation heat maps_ in action, head on over to our [heat maps examples gallery](https://arction.com/lightningchart-js-interactive-examples/search.html?t=heatmap).
+
+![image](https://user-images.githubusercontent.com/55391673/132004968-d9e106cb-f186-4e2f-99d6-679afdf0c65e.png)
 
 ## End word
 
