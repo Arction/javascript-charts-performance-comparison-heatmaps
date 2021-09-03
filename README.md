@@ -2,7 +2,7 @@ Public comparison of [LightningChart® JS](https://www.arction.com/lightningchar
 
 **UPDATE 3.9.2021**: Updated performance comparison with _LightningChart JS_ version 3.1 completely overthrows the previous results.
 
-Click [here](https://github.com/Arction/javascript-charts-performance-comparison-heatmaps#results-analysis) to skip to the results analysis.
+Click [here](#results-analysis) to skip to the results analysis.
 
 Heat maps are used for visualization of 3 dimensional data by mapping two dimensions to X and Y location and coloring the location based on the 3rd data dimension.
 
