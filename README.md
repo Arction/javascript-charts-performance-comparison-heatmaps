@@ -110,7 +110,7 @@ The available heat map dimensions range is crucial in real-life applications, be
 Another factor that is not visible in these benchmarks is the performance of cursor, panning and zooming interactions.
 While they can not be taken for granted in just any web chart, this short clip shows how heat map size does not affect the quality of _LightningChart JS_ interactions.
 
-TODO
+https://user-images.githubusercontent.com/55391673/132004145-c8778271-6a5b-454f-aa1f-3a5c492f9c8f.mp4
 
 ### Real-time heat maps
 
