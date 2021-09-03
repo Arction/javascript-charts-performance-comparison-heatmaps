@@ -122,11 +122,13 @@ sciChartPromise.then((sciChart) => {
           .map((_) =>
             new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
           );
-        const data1 = new Array(BENCHMARK_CONFIG.columns)
-          .fill(0)
-          .map((_) =>
-            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
-          );
+        const data1 = BENCHMARK_CONFIG.refreshData || BENCHMARK_CONFIG.scrollData ?
+          new Array(BENCHMARK_CONFIG.columns)
+            .fill(0)
+            .map((_) =>
+              new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+            )
+            : [[]]
 
         wait.textContent = "Waiting for chart ...";
         await new Promise((resolve) => requestAnimationFrame(resolve));
