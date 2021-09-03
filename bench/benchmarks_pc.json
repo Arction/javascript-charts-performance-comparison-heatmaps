@@ -1,7 +1,7 @@
 {
     "Static": {
         "50x50": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 160
             },
             "Competitor A": {
@@ -15,7 +15,7 @@
             }
         },
         "100x100": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 308
             },
             "Competitor A": {
@@ -29,7 +29,7 @@
             }
         },
         "200x200": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 419
             },
             "Competitor A": {
@@ -43,7 +43,7 @@
             }
         },
         "500x500": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 535
             },
             "Competitor A": {
@@ -57,7 +57,7 @@
             }
         },
         "1000x1000": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 1397
             },
             "Competitor A": {
@@ -71,7 +71,7 @@
             }
         },
         "2000x2000": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "initialRenderMs": 4695
             },
             "Competitor A": {
@@ -87,7 +87,7 @@
     },
     "Refresh": {
         "25x25": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 21.5,
                 "fps": 60.0
             },
@@ -105,7 +105,7 @@
             }
         },
         "50x50": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 29.8,
                 "fps": 60.0
             },
@@ -123,7 +123,7 @@
             }
         },
         "100x100": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 30.2,
                 "fps": 60.0
             },
@@ -140,7 +140,7 @@
             }
         },
         "200x200": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 60.3,
                 "fps": 59.9
             },
@@ -157,7 +157,7 @@
             }
         },
         "500x500": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 99.8,
                 "fps": 23.1
             },
@@ -173,7 +173,7 @@
             }
         },
         "750x750": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 99.9,
                 "fps": 10.1
             },
@@ -188,7 +188,7 @@
             }
         },
         "1000x1000": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 99.9,
                 "fps": 5.8
             },
@@ -205,7 +205,7 @@
     },
     "Append": {
         "50x50": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 21.3,
                 "fps": 60
             },
@@ -223,7 +223,7 @@
             }
         },
         "100x100": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 21.8,
                 "fps": 60
             },
@@ -240,7 +240,7 @@
             }
         },
         "200x200": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 28.6,
                 "fps": 60
             },
@@ -257,7 +257,7 @@
             }
         },
         "500x500": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 82.3,
                 "fps": 60
             },
@@ -272,7 +272,7 @@
             }
         },
         "750x750": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 99.8,
                 "fps": 38.2
             },
@@ -287,7 +287,7 @@
             }
         },
         "1000x1000": {
-            "LightningChart": {
+            "LightningChart v.3.0": {
                 "cpu": 99.9,
                 "fps": 34.9
             },

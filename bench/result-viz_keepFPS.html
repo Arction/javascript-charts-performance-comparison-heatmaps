@@ -11,7 +11,7 @@
     </style>
   </head>
   <body>
-    <script src="https://unpkg.com/@arction/lcjs@3.0.0/dist/lcjs.iife.js"></script>
+    <script src="https://unpkg.com/@arction/lcjs@3.1.0/dist/lcjs.iife.js"></script>
     <script>
       const url = new URL(document.URL)
       let src = url.searchParams.get('src') || 'pc'
@@ -33,6 +33,12 @@
         const tests = Object.keys(benchmarks)
         console.log(tests)
         const libraries = Object.keys(benchmarks[tests[0]])
+          .sort()
+          .sort((a, b) => {
+            if (a.includes('LightningChart')) return -1
+            if (b.includes('LightningChart')) return 1
+            return 0
+          })
         console.log(libraries)
         const libraryMaxDataPointCounts = libraries.map(library => {
           const heaviestPassingTest = tests.reduce((prev, cur) => {
@@ -62,6 +68,11 @@
             [750 * 750, '750x750'],
             [1000 * 1000, '1000x1000'],
             [2000 * 2000, '2000x2000'],
+            [3000 * 3000, '3000x3000'],
+            [4000 * 4000, '4000x4000'],
+            [8000 * 8000, '8000x8000'],
+            [12000 * 12000, '12000x12000'],
+            [14000 * 14000, '14000x14000'],
           ],
           logarithmic: false,
         })
@@ -83,9 +94,11 @@
           UIElementBuilders,
           FormattingFunctions,
           ColorHEX,
+          Themes,
         } = lcjs;
         const { title, titleX, titleY, categories, values, markersY, logarithmic } = props
         const chart = lightningChart().ChartXY({
+          theme: Themes.lightNew,
           disableAnimations: true,
           defaultAxisY: logarithmic ? {
             type: 'logarithmic',

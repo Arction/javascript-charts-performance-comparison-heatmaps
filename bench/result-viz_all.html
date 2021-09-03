@@ -11,7 +11,7 @@
     </style>
   </head>
   <body>
-    <script src="https://unpkg.com/@arction/lcjs@3.0.0/dist/lcjs.iife.js"></script>
+    <script src="https://unpkg.com/@arction/lcjs@3.1.0/dist/lcjs.iife.js"></script>
     <script>
       const {
         lightningChart,
@@ -27,6 +27,7 @@
         HighlightModes,
         UIElementBuilders,
         ColorHEX,
+        Themes,
       } = lcjs;
 
       const url = new URL(document.URL)
@@ -44,6 +45,12 @@
           const tests = Object.keys(benchmarkData)
           console.log(tests)
           const libraries = Object.keys(benchmarkData[tests[0]])
+            .sort()
+            .sort((a, b) => {
+              if (a.includes('LightningChart')) return -1
+              if (b.includes('LightningChart')) return 1
+              return 0
+            })
           console.log(libraries)
 
           const opts = {
@@ -93,7 +100,8 @@
 
         const chart = lightningChart()
           .ChartXY({
-            disableAnimations: true
+            disableAnimations: true,
+            theme: Themes.lightNew,
           })
           .setPadding({
             right: 150
@@ -242,20 +250,22 @@
                 fps: {
                   title: `Heatmap Chart Comparison | ${metrics} | Frames Per Second`,
                   titleAxisX: 'Heatmap Dimensions',
-                  value: (value, min, max) => Math.min(value, 60),
+                  value: (value, min, max) => value,
                   format: (builder, fps) => builder.addRow('FPS', fps.toFixed(1)),
                   titleAxisY: 'Frames Per Second (refresh rate)',
                   markers: [
                     [0, "0"],
                     [20, "20", "#ff0000b0"],
                     [40, "40"],
-                    [60, "> 60"],
+                    [60, "60"],
+                    [100, "100"],
+                    [160, "160"],
                   ]
                 },
                 cpu: {
                   title: `Heatmap Chart Comparison | ${metrics} | CPU Usage`,
                   titleAxisX: 'Heatmap Dimensions',
-                  invertY: true,
+                  invertY: false,
                   value: (value, min, max) => value,
                   format: (builder, cpu) => builder.addRow('CPU Usage', cpu.toFixed(1), '%'),
                   titleAxisY: 'CPU usage (%)',
