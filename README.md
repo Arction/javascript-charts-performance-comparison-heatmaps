@@ -123,7 +123,7 @@ With _refreshing_ and _appending_ heat map applications **it is clear that chart
 These libraries FPS quickly plummets to 5-15 range and even with 25x25 heat map (125 total data samples) they use 100% of available CPU power.
 
 In _refreshing_ stress tests, it becomes apparent that even other hardware accelerated charts can't keep up, performing on average **~3 times slower** and finally crashing as the heat map size exceeds 3000x3000.
-While at this level, the amount of data changes is simply too large to manage in a web browser, _Lightning Chart JS_ still persists all the way to 10000x10000 heat maps (100 million data points!!) and further without crashing. 
+While at this level, the amount of data changes is simply too large to manage in a web browser, _Lightning Chart JS_ still persists all the way to 10000x10000 heat maps (100 million data points!!) and further without crashing. To put it into perspective, in this case the chart is receiving data at a rate equal to 100 000 data sources with 1 kHz sample rate.
 
 **However**, what really makes _LightningChart JS_ shine above the other charts is the _appending_ stress test;
 
