@@ -126,8 +126,8 @@
           curDataUnformatted = data
           // data = number[][], map to [number,number,number][]
           const highchartsHeatmapData = [];
-          for (let column = 0; column < BENCHMARK_CONFIG.columns; column += 1) {
-            for (let row = 0; row < BENCHMARK_CONFIG.rows; row += 1) {
+          for (let column = 0; column < data.length; column += 1) {
+            for (let row = 0; row < data[column].length; row += 1) {
               highchartsHeatmapData.push([column, row, data[column][row]]);
             }
           }

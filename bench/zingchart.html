@@ -167,12 +167,12 @@
           curDataUnformatted = data
           // data = number[][], map to [number, number, number][]
           const zingHeatmapData = []
-          for (let iRow = 0; iRow < BENCHMARK_CONFIG.rows; iRow += 1) {
-            for (let iColumn = 0; iColumn < BENCHMARK_CONFIG.columns; iColumn += 1) {
+          for (let column = 0; column < data.length; column += 1) {
+            for (let row = 0; row < data[column].length; row += 1) {
               zingHeatmapData.push([
-                iColumn,
-                iRow,
-                data[iColumn][iRow]
+                column,
+                row,
+                data[column][row]
               ])
             }
           }
