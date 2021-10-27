@@ -104,7 +104,7 @@ With small heat map sizes (< 10000 total data samples) there is little variation
 
 However, after 500x500 threshold is passed the difference in hardware accelerated libraries speed is clear, being ready on average ~10x faster than the other JavaScript chart libraries.
 
-Going further, all other competitors drop off as they can no longer handle the extreme amounts of data, leaving only _LightningChart JS v.3.1_ steadily scaling upwards all the way up to 35000x35000 (**> billion data points!!**).
+Going further, all other competitors drop off as they can no longer handle the extreme amounts of data, leaving only _LightningChart JS v.3.1_ steadily scaling upwards all the way up to 35000x35000 (**> billion data points!**, > 400x more than average competitor).
 
 In 5 seconds, _LightningChart JS v.3.1_ can display a 13000x13000 heat map with a whopping **170 million data points**.
 This is **395 times** more data than the average competitor without hardware acceleration, and **20 times** more data than the closest hardware accelerated competitor.
