@@ -16,9 +16,7 @@
   <body>
     <h2 id="wait">Loading lib....</h2>
 
-    <!-- LCJS v.3.1.0 -->
-    <script src="https://unpkg.com/@arction/lcjs@3.1.0/dist/lcjs.iife.js"></script>
-
+    <script src='./lib/lcjs.iife.js'></script>
     <script src="config.iife.js"></script>
     <script>
       // Same code for all chart libraries.
@@ -120,6 +118,7 @@
         ColorHEX,
         AxisScrollStrategies,
         AxisTickStrategies,
+        emptyLine,
       } = lcjs;
 
       window.Test = (() => {
@@ -135,7 +134,8 @@
           chart = lightningChart().ChartXY({
             container: "chart",
             disableAnimations: true,
-          });
+          })
+            .setTitle('')
 
           const axisX = chart
             .getDefaultAxisX()
@@ -174,12 +174,15 @@
                   ],
                 }),
               })
-            );
+            )
+            .setWireframeStyle(emptyLine)
 
           if (BENCHMARK_CONFIG.scrollData) heatmap.addIntensityValues(data);
           else heatmap.invalidateIntensityValues(data);
 
-          const legend = chart.addLegendBox().add(chart);
+          requestAnimationFrame(() => {
+            const legend = chart.addLegendBox().add(chart);
+          })
         };
 
         const setData = (data) => {
