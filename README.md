@@ -129,7 +129,7 @@ These libraries FPS quickly plummets to 5-15 range and even with 25x25 heat map 
 In practice this would mean that nothing else on the web page could do anything interactively.
 
 In _refreshing_ stress tests, it becomes apparent that even other hardware accelerated charts can't keep up, performing on average **~6.5 times slower** and finally crashing as the heat map size exceeds 3000x3000.
-_Lightning Chart JS_ persists all the way to 14000x14000 heat maps (100 million data points!!) and further without crashing. With 6000x6000 heat map, _LightningChart JS_ performs with a stable refresh rate of ~13.0 times per second. The amount of data processed every second in this scenario is 468 million data points. This is the largest existing data process rate that we have ever proved in a web application.
+_Lightning Chart JS_ persists all the way to 14000x14000 heat maps and further without crashing. With 6000x6000 heat map, _LightningChart JS_ performs with a stable refresh rate of ~13.0 times per second. The amount of data processed every second in this scenario is 468 million data points. This is the largest existing data process rate that we have ever proved in a web application.
 To put it into perspective, in this case the chart is receiving data at a rate equal to 468 000 data sources with 1 kHz sample rate.
 
 **However**, what really makes _LightningChart JS_ shine above the other charts is the _appending_ stress test;
