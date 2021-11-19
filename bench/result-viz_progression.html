@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Heatmap benchmarks visualization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0px 0px 0px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="lib/lcjs.iife.js"></script>
+    <script>
+      const {
+        lightningChart,
+        AxisTickStrategies,
+        SolidFill,
+        ColorHSV,
+        SolidLine,
+        emptyFill,
+        emptyLine,
+        AutoCursorModes,
+        UIOrigins,
+        LinearGradientFill,
+        HighlightModes,
+        UIElementBuilders,
+        ColorHEX,
+        PointShape,
+        Themes,
+      } = lcjs;
+
+      // const data = {
+      //   chartTitle: '',
+      //   categoryAxisTitle: 'LightningChart JS version',
+      //   valueAxisTitle: 'Heat map load capacity in less than 5 seconds',
+      //   values: [
+      //     { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 2000 * 2000, valueLabel: '2000x2000' },
+      //     { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 13000 * 13000, valueLabel: '13000x13000' },
+      //     { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 30000 * 30000, valueLabel: '30000x30000' },
+      //   ]
+      // }
+
+      // const data = {
+      //   chartTitle: '',
+      //   categoryAxisTitle: 'LightningChart JS version',
+      //   valueAxisTitle: 'Heat map refresh data processing speed',
+      //   values: [
+      //     { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 100 },
+      //     { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 100, valueLabel: '100 M points / s' },
+      //     { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 468, valueLabel: '468 M points / s' },
+      //   ]
+      // }
+
+      const data = {
+        chartTitle: '',
+        categoryAxisTitle: 'LightningChart JS version',
+        valueAxisTitle: 'Heat map append data processing speed',
+        values: [
+          { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 43000, valueLabel: '43 K points /s' },
+          { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 1640000, valueLabel: '1 640 K points / s' },
+          { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 2296000, valueLabel: '2 300 K points / s' },
+        ]
+      }
+
+      const chart = lightningChart().ChartXY({
+        theme: Themes.lightNew,
+      })
+        .setTitle(data.chartTitle)
+
+      const axisX = chart.getDefaultAxisX().setTickStrategy(AxisTickStrategies.Empty).setTitle(data.categoryAxisTitle)
+      const axisY = chart.getDefaultAxisY().setTickStrategy(AxisTickStrategies.Empty).setTitle(data.valueAxisTitle)
+
+      data.values.forEach((value, i) => {
+        if (value.valueLabel)
+          axisY.addCustomTick(UIElementBuilders.AxisTick)
+            .setValue(value.value)
+            .setTextFormatter(_ => value.valueLabel)
+
+        if (value.categoryLabel)
+          axisX.addCustomTick(UIElementBuilders.AxisTick)
+            .setValue(i)
+            .setTextFormatter(_ => value.categoryLabel)
+      })
+
+      const lineSeries = chart.addPointLineSeries({
+        pointShape: PointShape.Circle
+      })
+        .add(data.values.map((p, i) => ({
+          x: i,
+          y: p.value,
+        })))
+        .setStrokeStyle(stroke => stroke.setThickness(5))
+        .setPointSize(10)
+
+      requestAnimationFrame(() => {
+        const xInterval = axisX.getInterval()
+        const xIntervalRange = xInterval.end - xInterval.start
+        axisX.setInterval(xInterval.start - xIntervalRange * .1, xInterval.end + xIntervalRange * .1, false, true)
+
+        const yInterval = axisY.getInterval()
+        const yIntervalRange = yInterval.end - yInterval.start
+        axisY.setInterval(yInterval.start - yIntervalRange * .1, yInterval.end + yIntervalRange * .1, false, true)
+      })
+
+    </script>
+  </body>
+</html>

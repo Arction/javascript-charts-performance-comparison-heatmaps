@@ -1,6 +1,9 @@
 {
     "Static": {
         "50x50": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 60
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 150
             },
@@ -21,6 +24,9 @@
             }
         },
         "100x100": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 64
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 155
             },
@@ -41,6 +47,9 @@
             }
         },
         "200x200": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 65
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 170
             },
@@ -61,6 +70,9 @@
             }
         },
         "500x500": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 67
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 180
             },
@@ -81,6 +93,9 @@
             }
         },
         "1000x1000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 70
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 190
             },
@@ -101,6 +116,9 @@
             }
         },
         "2000x2000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 85
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 250
             },
@@ -121,6 +139,9 @@
             }
         },
         "3000x3000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 110
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 350
             },
@@ -141,6 +162,9 @@
             }
         },
         "4000x4000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 150
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 510
             },
@@ -161,6 +185,9 @@
             }
         },
         "6000x6000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 200
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 880
             },
@@ -181,6 +208,9 @@
             }
         },
         "8000x8000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 330
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 1630
             },
@@ -201,6 +231,9 @@
             }
         },
         "10000x10000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 690
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 2180
             },
@@ -221,6 +254,9 @@
             }
         },
         "12000x12000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 790
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 3340
             },
@@ -241,6 +277,9 @@
             }
         },
         "15000x15000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 1150
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 4260
             },
@@ -261,6 +300,9 @@
             }
         },
         "20000x20000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 2500
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 7200
             },
@@ -281,6 +323,9 @@
             }
         },
         "25000x25000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 3900
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 11440
             },
@@ -301,6 +346,9 @@
             }
         },
         "30000x30000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 5400
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 17200
             },
@@ -321,6 +369,9 @@
             }
         },
         "35000x35000": {
+            "LightningChart v.3.3": {
+                "initialRenderMs": 7500
+            },
             "LightningChart v.3.1": {
                 "initialRenderMs": 28400
             },
@@ -343,6 +394,10 @@
     },
     "Refresh": {
         "25x25": {
+            "LightningChart v.3.3": {
+                "cpu": 12,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 32,
                 "fps": 164
@@ -369,6 +424,10 @@
             }
         },
         "50x50": {
+            "LightningChart v.3.3": {
+                "cpu": 12,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 50,
                 "fps": 164
@@ -395,6 +454,10 @@
             }
         },
         "100x100": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 25,
                 "fps": 164
@@ -420,6 +483,10 @@
             }
         },
         "200x200": {
+            "LightningChart v.3.3": {
+                "cpu": 14,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 42,
                 "fps": 164
@@ -445,6 +512,10 @@
             }
         },
         "500x500": {
+            "LightningChart v.3.3": {
+                "cpu": 23,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 90,
                 "fps": 160
@@ -470,6 +541,10 @@
             }
         },
         "750x750": {
+            "LightningChart v.3.3": {
+                "cpu": 32,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 97
@@ -495,6 +570,10 @@
             }
         },
         "1000x1000": {
+            "LightningChart v.3.3": {
+                "cpu": 48,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 80
@@ -519,6 +598,10 @@
             }
         },
         "2000x2000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 114
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 23
@@ -542,6 +625,10 @@
             }
         },
         "3000x3000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 55
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 10
@@ -565,6 +652,10 @@
             }
         },
         "4000x4000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 34
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 6
@@ -587,6 +678,10 @@
             }
         },
         "5000x5000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 22
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 4
@@ -609,6 +704,10 @@
             }
         },
         "6000x6000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 13
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 3
@@ -630,6 +729,10 @@
             }
         },
         "7000x7000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 9.9
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 2
@@ -651,6 +754,10 @@
             }
         },
         "8000x8000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 7.4
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 1.4
@@ -672,6 +779,10 @@
             }
         },
         "9000x9000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 6.0
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 1.2
@@ -693,9 +804,109 @@
             }
         },
         "10000x10000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 4.9
+            },
             "LightningChart v.3.1": {
                 "cpu": 100,
                 "fps": 1
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "11000x110000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 4.1
+            },
+            "LightningChart v.3.1": {
+                "fail": true
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "120000x120000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 3.4
+            },
+            "LightningChart v.3.1": {
+                "fail": true
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "130000x130000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 3.0
+            },
+            "LightningChart v.3.1": {
+                "fail": true
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "140000x140000": {
+            "LightningChart v.3.3": {
+                "cpu": 100,
+                "fps": 2.5
+            },
+            "LightningChart v.3.1": {
+                "fail": true
             },
             "Competitor D": {
                 "fail": true
@@ -716,6 +927,10 @@
     },
     "Append": {
         "25x25": {
+            "LightningChart v.3.3": {
+                "cpu": 10,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 35,
                 "fps": 165
@@ -742,6 +957,10 @@
             }
         },
         "50x50": {
+            "LightningChart v.3.3": {
+                "cpu": 10,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 55,
                 "fps": 165
@@ -768,6 +987,10 @@
             }
         },
         "100x100": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 27,
                 "fps": 165
@@ -793,6 +1016,10 @@
             }
         },
         "200x200": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 34,
                 "fps": 164
@@ -818,6 +1045,10 @@
             }
         },
         "500x500": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 50,
                 "fps": 164
@@ -843,6 +1074,10 @@
             }
         },
         "750x750": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 62,
                 "fps": 165
@@ -867,6 +1102,10 @@
             }
         },
         "1000x1000": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 25,
                 "fps": 165
@@ -890,6 +1129,10 @@
             }
         },
         "2000x2000": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 30,
                 "fps": 165
@@ -913,6 +1156,10 @@
             }
         },
         "3000x3000": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 40,
                 "fps": 165
@@ -936,6 +1183,10 @@
             }
         },
         "4000x4000": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 42,
                 "fps": 163
@@ -958,6 +1209,10 @@
             }
         },
         "5000x5000": {
+            "LightningChart v.3.3": {
+                "cpu": 11,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 53,
                 "fps": 163
@@ -980,6 +1235,10 @@
             }
         },
         "6000x6000": {
+            "LightningChart v.3.3": {
+                "cpu": 12,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 59,
                 "fps": 163
@@ -1001,6 +1260,10 @@
             }
         },
         "7000x7000": {
+            "LightningChart v.3.3": {
+                "cpu": 12,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 61,
                 "fps": 163
@@ -1022,6 +1285,10 @@
             }
         },
         "8000x8000": {
+            "LightningChart v.3.3": {
+                "cpu": 12,
+                "fps": 165
+            },
             "LightningChart v.3.1": {
                 "cpu": 73,
                 "fps": 162
@@ -1043,6 +1310,10 @@
             }
         },
         "9000x9000": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 78,
                 "fps": 161
@@ -1064,6 +1335,10 @@
             }
         },
         "10000x10000": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 30,
                 "fps": 164
@@ -1085,6 +1360,10 @@
             }
         },
         "11000x11000": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 32,
                 "fps": 145
@@ -1106,6 +1385,10 @@
             }
         },
         "12000x12000": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 38,
                 "fps": 125
@@ -1127,6 +1410,10 @@
             }
         },
         "13000x13000": {
+            "LightningChart v.3.3": {
+                "cpu": 13,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 44,
                 "fps": 120
@@ -1148,6 +1435,10 @@
             }
         },
         "14000x14000": {
+            "LightningChart v.3.3": {
+                "cpu": 14,
+                "fps": 164
+            },
             "LightningChart v.3.1": {
                 "cpu": 46,
                 "fps": 115

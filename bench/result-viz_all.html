@@ -45,6 +45,7 @@
           const tests = Object.keys(benchmarkData)
           console.log(tests)
           const libraries = Object.keys(benchmarkData[tests[0]])
+            .filter(item => !(item === 'LightningChart v.3.0' || item === 'LightningChart v.3.1'))
             .sort()
             .sort((a, b) => {
               if (a.includes('LightningChart')) return -1

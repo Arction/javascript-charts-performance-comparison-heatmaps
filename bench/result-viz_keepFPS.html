@@ -33,6 +33,7 @@
         const tests = Object.keys(benchmarks)
         console.log(tests)
         const libraries = Object.keys(benchmarks[tests[0]])
+            .filter(item => !(item === 'LightningChart v.3.0' || item === 'LightningChart v.3.1'))
           .sort()
           .sort((a, b) => {
             if (a.includes('LightningChart')) return -1
@@ -63,13 +64,11 @@
           values: libraryMaxDataPointCounts,
           markersY: [
             [100 * 100, '100x100'],
-            [200 * 200, '200x200'],
-            [500 * 500, '500x500'],
-            [750 * 750, '750x750'],
-            [1000 * 1000, '1000x1000'],
             [2000 * 2000, '2000x2000'],
             [3000 * 3000, '3000x3000'],
             [4000 * 4000, '4000x4000'],
+            [5000 * 5000, '5000x5000'],
+            [6000 * 6000, '6000x6000'],
             [8000 * 8000, '8000x8000'],
             [12000 * 12000, '12000x12000'],
             [14000 * 14000, '14000x14000'],

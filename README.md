@@ -1,5 +1,10 @@
 Public comparison of [LightningChart® JS](https://www.arction.com/lightningchart-js/) performance against other JavaScript charting libraries in visualizing different Heat map charts.
 
+**UPDATE 1.12.2021**: Updated performance comparison with _LightningChart JS_ version 3.3 once again completely changes the previous results.
+
+A separate section has been added to show the progression of _LightningChart JS_ heatmaps performance with time. Click [here](#lightningchart-js-heat-maps-performance-progression-over-time
+) to jump to it.
+
 **UPDATE 3.9.2021**: Updated performance comparison with _LightningChart JS_ version 3.1 completely overthrows the previous results.
 
 Click [here](#results-analysis) to skip to the results analysis.
@@ -26,6 +31,7 @@ This repository tests JavaScript charts performance in all these different appli
 
 The following chart libraries are included:
 
+- [LightningChart® JS v.3.3](https://www.arction.com/lightningchart-js/)
 - [LightningChart® JS v.3.1](https://www.arction.com/lightningchart-js/)
 - [LightningChart® JS v.3.0](https://www.arction.com/lightningchart-js/)
 - [Highcharts v.9.1.0](https://www.highcharts.com/)
@@ -65,7 +71,7 @@ Along X Axis the different tests (increasing data amount) are depicted.
 
 Y Axis corresponds to the _load-up speed_ measurement, higher Y location means faster and thus better result. Line not appearing means that the test _failed_.
 
-The range of drawn line along X Axis defines the valid range of static heat map data amount which the JavaScript chart library is capable of handling. For example, _LightningChart JS v.3.1_ is capable of handling 35000x35000 static heat maps.
+The range of drawn line along X Axis defines the valid range of static heat map data amount which the JavaScript chart library is capable of loading **fast**. For example, _LightningChart JS v.3.3_ is capable of loading a 35000x35000 heat map in 7.5 seconds.
 
 ![](loadup_static_pc-highend.PNG)
 
@@ -79,7 +85,7 @@ JavaScript chart performance in dynamic heat map applications is measured by fol
 
 The following charts visualize the performance of different libraries in increasingly heavy real-time heat map applications.
 
-The last bar chart indicates the _Maximum heat map size_ where the library could function with satisfactory performance. For example, _LightningChart JS v.3.1_ performed well until 3000x3000 (refresh) and 14000x14000 (append).
+The last bar chart indicates the _Maximum heat map size_ where the library could function with satisfactory performance. For example, _LightningChart JS v.3.3_ performed well until 6000x6000 (refresh) and 14000x14000 (append).
 
 **Refreshing heat map results:**
 
@@ -95,7 +101,6 @@ In these tests, live data is streamed into the heat map and displayed as fast as
 ![](fps-cpu_append_pc-highend.PNG)
 ![](fps10_append_pc-highend.PNG)
 
-
 ## Results analysis
 
 ### Static heat maps
@@ -104,10 +109,10 @@ With small heat map sizes (< 10000 total data samples) there is little variation
 
 However, after 500x500 threshold is passed the difference in hardware accelerated libraries speed is clear, being ready on average ~10x faster than the other JavaScript chart libraries.
 
-Going further, all other competitors drop off as they can no longer handle the extreme amounts of data, leaving only _LightningChart JS v.3.1_ steadily scaling upwards all the way up to 35000x35000 (**> billion data points!**, > 400x more than average competitor).
+Going further, all other competitors drop off as they can no longer handle the extreme amounts of data, leaving only _LightningChart JS v.3.3_ steadily scaling upwards.
 
-In 5 seconds, _LightningChart JS v.3.1_ can display a 13000x13000 heat map with a whopping **170 million data points**.
-This is **395 times** more data than the average competitor without hardware acceleration, and **20 times** more data than the closest hardware accelerated competitor.
+In 5 seconds, _LightningChart JS v.3.3_ can display a 30000x30000 heat map with a whopping **900 million data points**.
+This is **2000 times** more data than the average competitor without hardware acceleration, and **100 times** more data than the closest hardware accelerated competitor. The maximum confirmed heat map that _LightningChart JS v.3.3_ can display with 64 GB RAM is 5.6 billion data points.
 
 The available heat map dimensions range is crucial in real-life applications, because if it is not enough it means you have to _down-sample_ your data which results in precision loss! This can be a show stopper in many cases.
 
@@ -121,19 +126,48 @@ https://user-images.githubusercontent.com/55391673/132004145-c8778271-6a5b-454f-
 With _refreshing_ and _appending_ heat map applications **it is clear that charts without hardware acceleration can't function when heat map size exceeds even as little as 50x50;**
 
 These libraries FPS quickly plummets to 5-15 range and even with 25x25 heat map (125 total data samples) they use 100% of available CPU power.
+In practice this would mean that nothing else on the web page could do anything interactively.
 
-In _refreshing_ stress tests, it becomes apparent that even other hardware accelerated charts can't keep up, performing on average **~3 times slower** and finally crashing as the heat map size exceeds 3000x3000.
-While at this level, the amount of data changes is simply too large to manage in a web browser, _Lightning Chart JS_ still persists all the way to 10000x10000 heat maps (100 million data points!!) and further without crashing. To put it into perspective, in this case the chart is receiving data at a rate equal to 100 000 data sources with 1 kHz sample rate.
+In _refreshing_ stress tests, it becomes apparent that even other hardware accelerated charts can't keep up, performing on average **~6.5 times slower** and finally crashing as the heat map size exceeds 3000x3000.
+_Lightning Chart JS_ persists all the way to 14000x14000 heat maps (100 million data points!!) and further without crashing. With 6000x6000 heat map, _LightningChart JS_ performs with a stable refresh rate of ~13.0 times per second. The amount of data processed every second in this scenario is 468 million data points. This is the largest existing data process rate that we have ever proved in a web application.
+To put it into perspective, in this case the chart is receiving data at a rate equal to 468 000 data sources with 1 kHz sample rate.
 
 **However**, what really makes _LightningChart JS_ shine above the other charts is the _appending_ stress test;
 
-From the results, we can see that _LightningChart JS_ is able to take performance advantage of the fact that with _appending_ heat maps the entire previous data set does not need to be updated - while the closest hardware accelerated competitor drops at around 1000x1000, _LightningChart JS_ is seemingly unaffected by the increasing data amounts and still performs with a whopping **115 FPS** with a 14000x14000 heat map (**196 million visible data points**!!). Furthermore, the CPU usage at this point is still only at 46% which is less than what competitors require with 25x25 heat maps.
+From the results, we can see that _LightningChart JS_ is able to take performance advantage of the fact that with _appending_ heat maps the entire previous data set does not need to be updated - while the closest hardware accelerated competitor drops at around 1000x1000, _LightningChart JS_ is seemingly unaffected by the increasing data amounts and still performs with the full **160 FPS** with a 14000x14000 heat map (**196 million visible data points**!!). Furthermore, the CPU usage at this point is still only at 14% which is less than what competitors require with 25x25 heat maps.
 
-The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is **13800x** more efficient than the average chart without hardware acceleration, and **835x** more efficient than the closest hardware accelerated competitor.
+The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is **19200x** more efficient than the average chart without hardware acceleration, and **1160x** more efficient than the closest hardware accelerated competitor.
 
 To see these _next generation heat maps_ in action, head on over to our [heat maps examples gallery](https://arction.com/lightningchart-js-interactive-examples/search.html?t=heatmap).
 
 ![image](https://user-images.githubusercontent.com/55391673/132004968-d9e106cb-f186-4e2f-99d6-679afdf0c65e.png)
+
+## LightningChart JS heat maps performance progression over time
+
+Every time we make significant improvements in LightningChart JS heatmap routines, we make sure to publish the latest results here.
+This is currently the 3rd iteration of heat maps performance comparison, so we thought it would make sense to add a separate section to focus only on LightningChart and display how its performance evolves over time.
+
+It seems that the speed of loading static heat maps as well as the achievable data capacity has shown the greatest evolution. Following is a depiction of the heat map size that can be loaded in less than 5 seconds.
+
+- v.3.0: 2000x2000
+- v.3.1: 13000x13000 (+4200 %)
+- v.3.3: 30000x30000 (+530 %)
+
+![image](lcjs_progression_static.PNG)
+
+The efficiency of refreshing heatmap has also improved significantly between last two versions, v.3.1 and v.3.3 (+468 %).
+
+![image](lcjs_progression_refresh.PNG)
+
+And finally, the efficiency of appending heatmap. Similarly to the static heat map progression, this scenario has also evolved significantly across the versions.
+
+- v.3.0: 43 000 data points / second
+- v.3.1: 1 640 000 data points / second (+3800 %)
+- v.3.3: 2 300 000 data points / second (+140 %)
+
+![image](lcjs_progression_append.PNG)
+
+Something which might not be obvious is that all _LightningChart JS_ development happens because of an identified user requirement. We hope that by writing about performance progression we highlight our ability to evolve together with our users! 
 
 ## End word
 
