@@ -114,6 +114,14 @@ Going further, all other competitors drop off as they can no longer handle the e
 In 5 seconds, _LightningChart JS v.3.3_ can display a 30000x30000 heat map with a whopping **900 million data points**.
 This is **2000 times** more data than the average competitor without hardware acceleration, and **100 times** more data than the closest hardware accelerated competitor. The maximum confirmed heat map that _LightningChart JS v.3.3_ can display with 64 GB RAM is 5.6 billion data points.
 
+| Web chart | Heat map size (less than 5 seconds load time) | Data points |
+|:---|:----|:----|
+| LightningChart JS v.3.3.0 | 30000x30000 | 900 million | 
+| Competitor D | 3000x3000 | 9 million |
+| Competitor B | 1000x1000 | 1 million |
+| Competitor A | 500x500 | 250 thousand |
+| Competitor C | 200x200 | 40 thousand |
+
 The available heat map dimensions range is crucial in real-life applications, because if it is not enough it means you have to _down-sample_ your data which results in precision loss! This can be a show stopper in many cases.
 
 Another factor that is not visible in these benchmarks is the performance of cursor, panning and zooming interactions.
@@ -129,8 +137,16 @@ These libraries FPS quickly plummets to 5-15 range and even with 25x25 heat map 
 In practice this would mean that nothing else on the web page could do anything interactively.
 
 In _refreshing_ stress tests, it becomes apparent that even other hardware accelerated charts can't keep up, performing on average **~6.5 times slower** and finally crashing as the heat map size exceeds 3000x3000.
-_Lightning Chart JS_ persists all the way to 14000x14000 heat maps and further without crashing. With 6000x6000 heat map, _LightningChart JS_ performs with a stable refresh rate of ~13.0 times per second. The amount of data processed every second in this scenario is 468 million data points. This is the largest existing data process rate that we have ever proved in a web application.
-To put it into perspective, in this case the chart is receiving data at a rate equal to 468 000 data sources with 1 kHz sample rate.
+_Lightning Chart JS_ persists all the way to 14000x14000 heat maps and further without crashing. With 7000x7000 heat map, _LightningChart JS_ performs with a stable refresh rate of ~10.0 times per second. The amount of data processed every second in this scenario is 490 million data points. This is the largest existing data process rate that we have ever proved in a web application.
+To put it into perspective, in this case the chart is receiving data at a rate equal to 490 000 data sources with 1 kHz sample rate.
+
+| Web chart | Heat map size (refresh rate > 10) | Data points per refresh |
+|:---|:----|:----|
+| LightningChart JS v.3.3.0 | 7000x7000 | 49 million | 
+| Competitor D | 1000x1000 | 1 million |
+| Competitor B | 100x100 | 10 thousand |
+| Competitor A | 50x50 | 2 500 |
+| Competitor C | 50x50 | 2 500 |
 
 **However**, what really makes _LightningChart JS_ shine above the other charts is the _appending_ stress test;
 
