@@ -139,7 +139,7 @@ This measurement was completed on Mozilla FireFox, which doesn't allow monitorin
 
 The CPU efficiency of LightningChart in appending heat map applications is mind-blowing - looking at the 12000x12000 test, LightningChart JS only uses 13% of CPU power, which is less than what other solutions require with miniscule 25x25 heat maps. The CPU usage measurement is perhaps the most important performance attribute because it directly translates to the rest of the web page and end user experience – as a rule of thumb, if your chart uses more than 90% of CPU resource then your web page cannot maintain any other form of interactive user interface.
 
-The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is over million times more efficient than the average chart without hardware acceleration, and **35 000x** more efficient than the closest hardware accelerated competitor.
+The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is over million times more efficient than the average chart without hardware acceleration, and **35000x** more efficient than the closest hardware accelerated competitor.
 
 |Web chart | Heat map size | FPS |
 |:---|:--- |:---|
