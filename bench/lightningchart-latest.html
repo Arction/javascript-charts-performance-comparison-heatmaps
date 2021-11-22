@@ -31,7 +31,7 @@
           .map((_) =>
             new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
           );
-        const data1 = BENCHMARK_CONFIG.refreshData || BENCHMARK_CONFIG.scrollData ?
+        const data1 = BENCHMARK_CONFIG.refreshData ?
           new Array(BENCHMARK_CONFIG.columns)
             .fill(0)
             .map((_) =>
@@ -72,11 +72,8 @@
           // Push +1 heat map column every frame.
           let iColumn = 0;
           const append = () => {
-            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns * 2);
-            const column =
-              iColumn < BENCHMARK_CONFIG.columns
-                ? data0[iColumn]
-                : data1[iColumn - BENCHMARK_CONFIG.columns];
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns);
+            const column = data0[iColumn]
             window.Test.appendColumn(column);
             if (typeof BENCHMARK_CONFIG.scrollData === "boolean") {
               requestAnimationFrame(append);
