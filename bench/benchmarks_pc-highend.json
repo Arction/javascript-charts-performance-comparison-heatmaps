@@ -1208,32 +1208,6 @@
                 "fail": true
             }
         },
-        "5000x5000": {
-            "LightningChart v.3.3": {
-                "cpu": 11,
-                "fps": 165
-            },
-            "LightningChart v.3.1": {
-                "cpu": 53,
-                "fps": 163
-            },
-            "Competitor D": {
-                "fail": true
-            },
-            "LightningChart v.3.0": {
-                "cpu": 100,
-                "fps": 0.3
-            },
-            "Competitor A": {
-                "fail": true
-            },
-            "Competitor B": {
-                "fail": true
-            },
-            "Competitor C": {
-                "fail": true
-            }
-        },
         "6000x6000": {
             "LightningChart v.3.3": {
                 "cpu": 12,
@@ -1241,31 +1215,6 @@
             },
             "LightningChart v.3.1": {
                 "cpu": 59,
-                "fps": 163
-            },
-            "Competitor D": {
-                "fail": true
-            },
-            "LightningChart v.3.0": {
-                "fail": true
-            },
-            "Competitor A": {
-                "fail": true
-            },
-            "Competitor B": {
-                "fail": true
-            },
-            "Competitor C": {
-                "fail": true
-            }
-        },
-        "7000x7000": {
-            "LightningChart v.3.3": {
-                "cpu": 12,
-                "fps": 165
-            },
-            "LightningChart v.3.1": {
-                "cpu": 61,
                 "fps": 163
             },
             "Competitor D": {
@@ -1309,31 +1258,6 @@
                 "fail": true
             }
         },
-        "9000x9000": {
-            "LightningChart v.3.3": {
-                "cpu": 13,
-                "fps": 164
-            },
-            "LightningChart v.3.1": {
-                "cpu": 78,
-                "fps": 161
-            },
-            "Competitor D": {
-                "fail": true
-            },
-            "LightningChart v.3.0": {
-                "fail": true
-            },
-            "Competitor A": {
-                "fail": true
-            },
-            "Competitor B": {
-                "fail": true
-            },
-            "Competitor C": {
-                "fail": true
-            }
-        },
         "10000x10000": {
             "LightningChart v.3.3": {
                 "cpu": 13,
@@ -1359,13 +1283,13 @@
                 "fail": true
             }
         },
-        "11000x11000": {
+        "12000x12000": {
             "LightningChart v.3.3": {
                 "cpu": 13,
                 "fps": 164
             },
             "LightningChart v.3.1": {
-                "cpu": 32,
+                "cpu": 38,
                 "fps": 145
             },
             "Competitor D": {
@@ -1384,14 +1308,12 @@
                 "fail": true
             }
         },
-        "12000x12000": {
+        "15000x15000": {
             "LightningChart v.3.3": {
-                "cpu": 13,
                 "fps": 164
             },
             "LightningChart v.3.1": {
-                "cpu": 38,
-                "fps": 125
+                "fps": 130
             },
             "Competitor D": {
                 "fail": true
@@ -1409,14 +1331,12 @@
                 "fail": true
             }
         },
-        "13000x13000": {
+        "20000x20000": {
             "LightningChart v.3.3": {
-                "cpu": 13,
-                "fps": 164
+                "fps": 158
             },
             "LightningChart v.3.1": {
-                "cpu": 44,
-                "fps": 120
+                "fps": 110
             },
             "Competitor D": {
                 "fail": true
@@ -1434,14 +1354,58 @@
                 "fail": true
             }
         },
-        "14000x14000": {
+        "25000x25000": {
             "LightningChart v.3.3": {
-                "cpu": 14,
-                "fps": 164
+                "fps": 157
             },
             "LightningChart v.3.1": {
-                "cpu": 46,
-                "fps": 115
+                "fps": 90
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "30000x30000": {
+            "LightningChart v.3.3": {
+                "fps": 152
+            },
+            "LightningChart v.3.1": {
+                "fps": 65
+            },
+            "Competitor D": {
+                "fail": true
+            },
+            "LightningChart v.3.0": {
+                "fail": true
+            },
+            "Competitor A": {
+                "fail": true
+            },
+            "Competitor B": {
+                "fail": true
+            },
+            "Competitor C": {
+                "fail": true
+            }
+        },
+        "35000x35000": {
+            "LightningChart v.3.3": {
+                "fps": 140
+            },
+            "LightningChart v.3.1": {
+                "fps": 50
             },
             "Competitor D": {
                 "fail": true

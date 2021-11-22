@@ -45,11 +45,11 @@
       // const data = {
       //   chartTitle: '',
       //   categoryAxisTitle: 'LightningChart JS version',
-      //   valueAxisTitle: 'Heat map refresh data processing speed',
+      //   valueAxisTitle: 'Heat map refreshing FPS',
       //   values: [
-      //     { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 100 },
-      //     { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 100, valueLabel: '100 M points / s' },
-      //     { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 468, valueLabel: '468 M points / s' },
+      //     { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 10, valueLabel: '10.0' },
+      //     { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 80, valueLabel: '80.0' },
+      //     { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 164, valueLabel: '164.0' },
       //   ]
       // }
 
@@ -59,13 +59,14 @@
         valueAxisTitle: 'Heat map size (append test), keeping FPS > 10',
         values: [
           { name: 'LightningChart JS v.3.0', categoryLabel: 'v.3.0', value: 1000 * 1000, valueLabel: '1000x1000' },
-          { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 14000 * 14000, valueLabel: '14000x14000' },
-          { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 0, valueLabel: 'TODO' },
+          { name: 'LightningChart JS v.3.1', categoryLabel: 'v.3.1', value: 15000 * 14000, valueLabel: '14000x14000' },
+          { name: 'LightningChart JS v.3.3', categoryLabel: 'v.3.3', value: 35000 * 35000, valueLabel: '35000x35000' },
         ]
       }
 
       const chart = lightningChart().ChartXY({
         theme: Themes.lightNew,
+        disableAnimations: true,
       })
         .setTitle(data.chartTitle)
 

@@ -69,8 +69,8 @@ wb.Props = {
             ws_data.push([
                 `${test}`,
                 library,
-                srcData[test][library]['fps'],
-                srcData[test][library]['cpu']
+                srcData[test][library] ? srcData[test][library]['fail'] === true ? 'FAIL': srcData[test][library]['fps'] ? srcData[test][library]['fps'] : 'MISSING' : 'MISSING', 
+                srcData[test][library] ? srcData[test][library]['fail'] === true ? 'FAIL': srcData[test][library]['cpu'] ? srcData[test][library]['cpu'] : 'MISSING' : 'MISSING' 
             ])
         })
     })

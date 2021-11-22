@@ -134,9 +134,20 @@ To put it into perspective, in this case the chart is receiving data at a rate e
 
 **However**, what really makes _LightningChart JS_ shine above the other charts is the _appending_ stress test;
 
-From the results, we can see that _LightningChart JS_ is able to take performance advantage of the fact that with _appending_ heat maps the entire previous data set does not need to be updated - while the closest hardware accelerated competitor drops at around 1000x1000, _LightningChart JS_ is seemingly unaffected by the increasing data amounts and still performs with the full **160 FPS** with a 14000x14000 heat map (**196 million visible data points**!!). Furthermore, the CPU usage at this point is still only at 14% which is less than what competitors require with 25x25 heat maps. The CPU usage measurement is perhaps the most important performance attribute because it directly translates to the rest of the web page and end user experience – as a rule of thumb, if your chart uses more than 90% of CPU resource then your web page cannot maintain any other form of interactive user interface.
+From the results, we can see that _LightningChart JS_ is able to take performance advantage of the fact that with _appending_ heat maps the entire previous data set does not need to be updated - while the closest hardware accelerated competitor drops at around 1000x1000, _LightningChart JS_ is seemingly unaffected by the increasing data amounts and still performs with **140 FPS** with a 35000x35000 heat map (**1.2 BILLION visible data points**!!).
+This measurement was completed on Mozilla FireFox, which doesn't allow monitoring CPU usage (unlike Google Chrome), so the CPU usage measurements are missing.
 
-The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is **19200x** more efficient than the average chart without hardware acceleration, and **1160x** more efficient than the closest hardware accelerated competitor.
+The CPU efficiency of LightningChart in appending heat map applications is mind-blowing - looking at the 12000x12000 test, LightningChart JS only uses 13% of CPU power, which is less than what other solutions require with miniscule 25x25 heat maps. The CPU usage measurement is perhaps the most important performance attribute because it directly translates to the rest of the web page and end user experience – as a rule of thumb, if your chart uses more than 90% of CPU resource then your web page cannot maintain any other form of interactive user interface.
+
+The sheer difference in performance in this test scenario is insane; if we linearly compare data amount and FPS, _LightningChart JS_ is over million times more efficient than the average chart without hardware acceleration, and **35 000x** more efficient than the closest hardware accelerated competitor.
+
+|Web chart | Heat map size | FPS |
+|:---|:--- |:---|
+| LightningChart JS v.3.3.0 | 35000x35000 | 140.0 |
+| Competitor A | 750x750 | 0.2 |
+| Competitor B | 1000x1000 | 0.2 |
+| Competitor C | 50x50 | 44.0 |
+| Competitor D | 4000x4000 | 0.3 |
 
 To see these _next generation heat maps_ in action, head on over to our [heat maps examples gallery](https://arction.com/lightningchart-js-interactive-examples/search.html?t=heatmap).
 
@@ -149,25 +160,31 @@ This is currently the 3rd iteration of heat maps performance comparison, so we t
 
 It seems that the speed of loading static heat maps as well as the achievable data capacity has shown the greatest evolution. Following is a depiction of the heat map size that can be loaded in less than 5 seconds.
 
-- v.3.0: 2000x2000
-- v.3.1: 13000x13000 (+4200 %)
-- v.3.3: 30000x30000 (+530 %)
+| LCJS version | Heat map size (less than 5 seconds load time) |
+|:---|:----|
+| v.3.0 | 2000x2000 |
+| v.3.1 | 13000x13000 |
+| v.3.3 | 30000x30000 |
 
 ![image](lcjs_progression_static.PNG)
 
-The efficiency of refreshing heatmap has also improved significantly between last two versions, v.3.1 and v.3.3 (+468 %).
+The efficiency of refreshing heatmap has also improved significantly.
 
-![image](lcjs_progression_refresh.PNG)
+| LCJS version | Heat map size | FPS | CPU % |
+|:---|:----|:----|:---|
+| v.3.0 | 1000x1000 | 10.0 | 100.0 |
+| v.3.1 | 1000x1000 | 80.0 | 100.0 |
+| v.3.3 | 1000x1000 | 164.0 | 48.0 |
 
 And finally, the efficiency of appending heatmap. Similarly to the static heat map progression, this scenario has also evolved significantly across the versions.
 
-- v.3.0: 43 000 data points / second
-- v.3.1: 1 640 000 data points / second (+3800 %)
-- v.3.3: 2 300 000 data points / second (+140 %)
+| LCJS version | Heat map size | FPS |
+|:---|:----|:----
+| v.3.0 | 1000x1000 | 10.0 |
+| v.3.1 | 15000x15000 | 130.0 |
+| v.3.3 | 35000x35000 | 140.0 |
 
-![image](lcjs_progression_append.PNG)
-
-Something which might not be obvious is that all _LightningChart JS_ development happens because of an identified user requirement. We hope that by writing about performance progression we highlight our ability to evolve together with our users! 
+Something which might not be obvious is that all _LightningChart JS_ development happens because of an identified user requirement. We hope that by writing about performance progression we highlight our ability to evolve together with our users!
 
 ## End word
 
