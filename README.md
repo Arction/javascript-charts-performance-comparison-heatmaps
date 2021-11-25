@@ -226,4 +226,4 @@ _FPS_ and _Load-up speed_ metrics are measured programmatically and logged to co
 
 _CPU usage_ has to be manually monitored using browser developer tools.
 
-_SciChart JS_ requires locally installed license verification software and an active license - the benchmark application can be found in `bench/scichart`.
+_SciChart JS_ requires locally installed license verification software and an active license!

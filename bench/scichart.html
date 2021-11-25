@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SciChart JS benchmark app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+    <style>
+      #wait,
+      #reference {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="wait">Loading lib....</h2>
+
+    <script src='https://cdn.jsdelivr.net/npm/scichart@2.0.2115/_wasm/scichart.browser.js'></script>
+    <script src="config.iife.js"></script>
+    <script>
+      // Same code for all chart libraries.
+      // NOTE: SciChart initial render method is async, differently from other charts !
+      console.log(BENCHMARK_CONFIG);
+      const wait = document.getElementById("wait");
+
+      (async () => {
+        wait.textContent = "Generating test data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const data0 = new Array(BENCHMARK_CONFIG.columns)
+          .fill(0)
+          .map((_) =>
+            new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+          );
+        const data1 = BENCHMARK_CONFIG.refreshData ?
+          new Array(BENCHMARK_CONFIG.columns)
+            .fill(0)
+            .map((_) =>
+              new Array(BENCHMARK_CONFIG.rows).fill(0).map((_) => Math.random())
+            )
+            : [[]]
+
+        wait.textContent = "Waiting for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        console.log(window.Test);
+
+        wait.textContent = "Parsing data for chart ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        const formattedData0 = window.Test.formatData(data0);
+        const formattedData1 = window.Test.formatData(data1);
+
+        wait.textContent = "Rendering initial data ...";
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        let tStart = Date.now();
+        await window.Test.renderInitial(formattedData0);
+        wait.textContent = "";
+        const tAfter = Date.now();
+        console.log(`initial render`, (tAfter - tStart).toFixed(1), "ms");
+
+        setTimeout(() => {
+          tStart = Date.now();
+          let frames = 0;
+          let fps;
+          const recordFrame = () => {
+            frames++;
+            const tNow = Date.now();
+            fps = 1000 / ((tNow - tStart) / frames);
+            requestAnimationFrame(recordFrame);
+          };
+          requestAnimationFrame(recordFrame);
+          setInterval(() => console.log(`FPS: ${fps.toFixed(1)}`), 1000);
+        }, 2000);
+
+        if (BENCHMARK_CONFIG.refreshData) {
+          // Keep refreshing heat map data every frame.
+          let iDataset = 0;
+          const refresh = () => {
+            iDataset = (iDataset + 1) % 2;
+            window.Test.setData(
+              iDataset === 0 ? formattedData0 : formattedData1
+            );
+            requestAnimationFrame(refresh);
+          };
+          requestAnimationFrame(refresh);
+        }
+
+        if (BENCHMARK_CONFIG.scrollData) {
+          // Push +1 heat map column every frame.
+          let iColumn = 0;
+          const append = () => {
+            iColumn = (iColumn + 1) % (BENCHMARK_CONFIG.columns);
+            const column = data0[iColumn]
+            window.Test.appendColumn(column);
+            if (typeof BENCHMARK_CONFIG.scrollData === "boolean") {
+              requestAnimationFrame(append);
+            } else {
+              setTimeout(append, BENCHMARK_CONFIG.scrollData);
+            }
+          };
+          requestAnimationFrame(append);
+        }
+
+      })();
+    </script>
+    <div id="chart"></div>
+
+    <script>
+      window.Test = (() => {
+        let heatmapSeries;
+        let heatmapDataSeries;
+        let curData;
+        let sciChartSurface;
+        let wasmContext;
+
+        const {
+          SciChartSurface,
+          NumericAxis,
+          UniformHeatmapDataSeries,
+          UniformHeatmapRenderableSeries,
+          HeatmapColorMap,
+        } = SciChart
+
+        SciChartSurface.configure({
+          dataUrl: "https://cdn.jsdelivr.net/npm/scichart@2.0.2115/_wasm/scichart2d.data",
+          wasmUrl: "https://cdn.jsdelivr.net/npm/scichart@2.0.2115/_wasm/scichart2d.wasm"
+        })
+
+        const formatData = (data) => {
+          curData = data;
+          // data = number[][]
+          return data;
+        };
+
+        const renderInitial = (data) => {
+          curData = data;
+          return new Promise(async (resolve) => {
+            const sciChart = await SciChartSurface.create('chart');
+            sciChartSurface = sciChart.sciChartSurface
+            wasmContext = sciChart.wasmContext
+            sciChartSurface.xAxes.add(new NumericAxis(wasmContext));
+            sciChartSurface.yAxes.add(new NumericAxis(wasmContext));
+            heatmapDataSeries = new UniformHeatmapDataSeries(
+              wasmContext,
+              {
+                xStart: 0,
+                xStep: 1,
+                yStart: 0,
+                yStep: 1,
+                zValues: data,
+              }
+            );
+            // Create a Heatmap RenderableSeries with the color map. ColorMap.minimum/maximum defines the values in
+            // HeatmapDataSeries which correspond to gradient stops at 0..1
+            heatmapSeries = new UniformHeatmapRenderableSeries(wasmContext, {
+              dataSeries: heatmapDataSeries,
+              colorMap: new HeatmapColorMap({
+                minimum: 0,
+                maximum: 1,
+                gradientStops: [
+                  { offset: 0, color: "#3060cf" },
+                  { offset: 0.5, color: "#fffbbc" },
+                  { offset: 0.9, color: "#c4463a" },
+                  { offset: 1, color: "#c4463a" },
+                ],
+              }),
+            });
+            sciChartSurface.renderableSeries.add(heatmapSeries);
+            
+            const onRendered = () => {
+              resolve(undefined)
+              sciChartSurface.rendered.unsubscribe(onRendered)
+            }
+            sciChartSurface.rendered.subscribe(onRendered)
+
+            requestAnimationFrame(resolve);
+          })
+        };
+
+        const setData = (data) => {
+          heatmapDataSeries.setZValues(data);
+        };
+
+        const appendColumn = (column) => {
+          curData.shift();
+          curData.push(column);
+          setData(curData);
+        };
+
+        return {
+          formatData,
+          renderInitial,
+          setData,
+          appendColumn,
+        };
+      })()
+    </script>
+
+    <p id="reference"></p>
+  </body>
+</html>
